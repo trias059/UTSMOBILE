@@ -2,46 +2,52 @@ import 'package:flutter/material.dart';
 import '../models/quiz_brain.dart';
 import '../data/question.dart';
 
+// Inisialisasi objek QuizBrain
 QuizBrain quizBrain = QuizBrain();
 
+// Widget Stateful untuk halaman kuis
 class QuizPage extends StatefulWidget {
   @override
-  _QuizPageState createState() => _QuizPageState();
+  _QuizPageState createState() => _QuizPageState(); // Buat state-nya
 }
 
+// State dari halaman kuis
 class _QuizPageState extends State<QuizPage> {
   @override
   void initState() {
     super.initState();
-    quizBrain.setQuestions(questionBank);
+    quizBrain.setQuestions(questionBank); // Set daftar soal ke quizBrain
   }
 
+  // Fungsi ketika jawaban dipilih
   void _answerQuestion(int selectedIndex) {
     setState(() {
-      quizBrain.checkAnswer(selectedIndex);
-      if (quizBrain.isFinished()) {
+      quizBrain.checkAnswer(selectedIndex); // Cek jawaban
+      if (quizBrain.isFinished()) { // Jika soal selesai
+        // Arahkan ke halaman hasil dan kirim skor
         Navigator.pushReplacementNamed(context, '/result', arguments: quizBrain.score);
-        quizBrain.reset();
+        quizBrain.reset(); // Reset kuis
       } else {
-        quizBrain.nextQuestion();
+        quizBrain.nextQuestion(); // Lanjut ke soal berikutnya
       }
     });
   }
 
+  // Tampilan UI
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey, // Background color
+      backgroundColor: Colors.grey, // Warna latar belakang
       appBar: AppBar(
-        title: Text('Kuis'),
-        backgroundColor: Colors.grey,
+        title: Text('Kuis'), // Judul AppBar
+        backgroundColor: Colors.grey, // Warna AppBar
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0), // Padding seluruh body
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center, // Posisi di tengah vertikal
           children: [
-            // Title Text
+            // Teks ucapan semangat
             Text(
               'SEMOGA SUKSES!!',
               style: TextStyle(
@@ -51,17 +57,17 @@ class _QuizPageState extends State<QuizPage> {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 20), // Jarak
 
-            // Question Text
+            // Tampilan pertanyaan
             Container(
               decoration: BoxDecoration(
-                color: Colors.blue, // Container background
-                borderRadius: BorderRadius.circular(12),
+                color: Colors.blue, // Warna background kontainer
+                borderRadius: BorderRadius.circular(12), // Sudut melengkung
               ),
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0), // Padding dalam kontainer
               child: Text(
-                quizBrain.currentQuestion.questionText,
+                quizBrain.currentQuestion.questionText, // Teks soal
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -70,49 +76,50 @@ class _QuizPageState extends State<QuizPage> {
                 textAlign: TextAlign.center,
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 20), // Jarak
 
-            // Options
+            // Menampilkan semua opsi jawaban sebagai tombol
             ...quizBrain.currentQuestion.options.asMap().entries.map((entry) {
-              int index = entry.key;
-              String option = entry.value;
+              int index = entry.key; // Index jawaban
+              String option = entry.value; // Teks jawaban
 
               return Container(
-                margin: const EdgeInsets.only(bottom: 16), // Space between buttons
+                margin: const EdgeInsets.only(bottom: 16), // Jarak antar tombol
                 child: ElevatedButton(
-                  onPressed: () => _answerQuestion(index),
+                  onPressed: () => _answerQuestion(index), // Saat tombol ditekan
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: _getButtonColor(index), // Color based on index
+                    backgroundColor: _getButtonColor(index), // Warna tombol berdasarkan index
                     padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30), // Rounded buttons
+                      borderRadius: BorderRadius.circular(30), // Tombol membulat
                     ),
                   ),
                   child: Text(
-                    option,
+                    option, // Isi teks tombol
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
                 ),
               );
-            }).toList(),
+            }).toList(), // Convert ke list widget
           ],
         ),
       ),
     );
   }
 
+  // Fungsi untuk mendapatkan warna tombol berdasarkan index
   Color _getButtonColor(int index) {
     switch (index) {
       case 0:
-        return Colors.green; // First option color
+        return Colors.green; // Opsi pertama hijau
       case 1:
-        return Colors.purple; // Second option color
+        return Colors.purple; // Opsi kedua ungu
       case 2:
-        return Colors.pink; // Third option color
+        return Colors.pink; // Opsi ketiga pink
       case 3:
-        return Colors.black; // Fourth option color
+        return Colors.black; // Opsi keempat hitam
       default:
-        return Colors.blue; // Fallback color
+        return Colors.blue; // Warna default jika lebih dari 4
     }
   }
 }
