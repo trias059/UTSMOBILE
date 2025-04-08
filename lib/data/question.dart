@@ -1,10 +1,10 @@
-import '../models/question.dart';
+'../models/question.dart'; //Mengimpor class Question dari file question.dart (file yang mengelola logika soal).
 
 List<Question> questionBank = [
   Question(
-    questionText: 'Apa nama Fakultas yang di tempati Manajemen Infromatika?',
-    options: ['Psikologi', 'FIB', 'Vokasi', 'FMIPA'],
-    correctAnswerIndex: 2,
+    questionText: 'Apa nama Fakultas yang di tempati Manajemen Infromatika?', //pertanyaan dalam bentuk String
+    options: ['Psikologi', 'FIB', 'Vokasi', 'FMIPA'], //daftar jawaban yang bisa dipilih (dalam bentuk List<String>
+    correctAnswerIndex: 2, //indeks jawaban yang benar dari List options
   ),
   Question(
     questionText: 'Siapa yang memimpin Fakultas?',
