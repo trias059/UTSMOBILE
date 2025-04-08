@@ -6,7 +6,7 @@ class QuizBrain {
   int _score = 0; // Menyimpan skor atau jumlah jawaban benar
   List<Question> _questions = []; // Menyimpan daftar pertanyaan (soal) dalam bentuk List<Question>
 
-  // Method untuk mengisi list pertanyaan dari luar (misalnya dari questionBank)
+  // Method untuk mengisi list pertanyaan dari luar questionBank
   void setQuestions(List<Question> questions) {
     _questions = questions;
   }
